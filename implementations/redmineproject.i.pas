@@ -134,6 +134,16 @@ begin
   Redmine.FillProjects(id);
 end;
 
+procedure TRedmineProject.Update(AID: integer);
+begin
+
+end;
+
+procedure TRedmineProject.Update(AName: string);
+begin
+
+end;
+
 destructor TRedmineProject.Destroy;
 begin
   Trackers1.Free;
@@ -141,36 +151,6 @@ begin
   Categorys1.Free;
   Versions1.Free;
   Users1.Free;
-end;
-
-procedure TRedmineProject.Update(XMLNode1: TDOMNode);
-var
-  TrackerId1: string;
-  Tracker1, TrackerTmp: TTracker;
-begin
-  //TrackerId1 := StrToInt(XMLNode1.FindNode('tracker').Attributes.GetNamedItem('id').NodeValue);
-  //Tracker1 := Redmine(TrackerName1);
-  //if not Assigned(Tracker1) then
-  //begin
-  //  TrackerTmp := Redmine.GetTrackerBy(TrackerName1);
-  //  Tracker1 := AddTracker(TrackerTmp.Name, TrackerTmp.Id);
-  //end;
-  //Tracker1.Update(XMLNode1);
-end;
-
-procedure TRedmineProject.Update(CSV: TCSV; Row: Integer);
-var
-  TrackerName1: string;
-  Tracker1, TrackerTmp: TTracker;
-begin
-  //TrackerName1 := CSV.GetValueByField(Row, 'Трекер');
-  //Tracker1 := GetTrackerByName(TrackerName1);
-  //if not Assigned(Tracker1) then
-  //begin
-  //  TrackerTmp := Redmine.GetTrackerBy(TrackerName1);
-  //  Tracker1 := AddTracker(TrackerTmp.Name, TrackerTmp.Id);
-  //end;
-  //Tracker1.Update(CSV, Row);
 end;
 
 procedure TRedmineProject.Save;

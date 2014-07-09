@@ -80,7 +80,6 @@ type
     function PostContent(Url: string; Post: TObject = nil): string;
     function PutContent(Url: string; Post: TStream = nil): string;
     function DeleteContent(Url: string; Post: TStream = nil): string; overload;
-    function GetIssue(number: Integer): TIssue;
     function GetLanguages(index: Integer): TLang;
     function GetNotice(index: Integer): TLang;
     procedure GetProfile();
@@ -131,7 +130,6 @@ type
     property LoginnedHTML: boolean read GetLoginnedHTML;
     property Busy: boolean read GetBusy;
     property Progress: double read GetProgress;
-    procedure SaveIssue(index: Integer);
     property Anonym: boolean read Anonym1;
     function Login(AAnonym: boolean = False; AsHtml: boolean = False; ASilence: boolean = False): boolean;
     property Permission: TRedminePermissions read GetPermission;

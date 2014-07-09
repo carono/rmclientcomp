@@ -8,7 +8,7 @@ interface
 uses
   Classes, SysUtils, Forms, strutils, XMLRead, DOM, IdMultipartFormData, IdHTTP, IdHTTPCUS, rc_parser,
   rcIssueCategory, rcIssuePriority, rcRedmineUser, rcThemes, TripCMP,
-  rcUserRole, rcObject, XMLWrite, rcSets, cUtils, rcInterfaces, rcIssueStatus, rcTracking, ArrayManager,
+  rcUserRole, rcObject, XMLWrite, rcSets, cUtils, rcIssueStatus, rcTracking, ArrayManager,
   base64, rcRecords, rcIssuesActivity;
 
 type

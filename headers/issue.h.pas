@@ -12,7 +12,7 @@ type
 
   { TIssue }
 
-  TIssue = class(TInterfacedObject, IIssue)
+  TIssue = class(TObject)
   private
     Tracker1: TTracker;
     isChanged1: boolean;

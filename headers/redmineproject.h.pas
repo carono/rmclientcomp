@@ -77,8 +77,8 @@ type
     procedure RefreshCategories();
     procedure RefreshIssues();
     procedure Refresh();
-    procedure Update(XMLNode1: TDOMNode); overload;
-    procedure Update(CSV: TCSV; Row: Integer); overload;
+    procedure Update(AID: integer); overload;
+    procedure Update(AName: string); overload;
     procedure Save;
     procedure Cancel;
     property isChanged: boolean read GetisChanged;

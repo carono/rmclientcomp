@@ -86,20 +86,6 @@ begin
   Result := ExtractContent(Url, TMDelete, Post);
 end;
 
-function TRedmineClient.GetIssue(number: Integer): TIssue;
-var
-  i, j, t: Integer;
-begin
-  //for i := 0 to length(Projects1) - 1 do
-  //  for t := 0 to Length(Projects1[i]^.Trackers) - 1 do
-  //    for j := 0 to Length(Projects1[i]^.Trackers[t]^.Issues) - 1 do
-  //      if Projects1[i]^.Trackers[t]^.Issues[j]^.Number = number then
-  //      begin
-  //        Result := Projects1[i]^.Trackers[t]^.Issues[j];
-  //        break;
-  //      end;
-end;
-
 function TRedmineClient.GetLanguages(index: Integer): TLang;
 begin
   if index < Length(Languages1) then
@@ -184,99 +170,6 @@ begin
   Result := Progress1;
 end;
 
-//function TRedmineClient.GetProjects(index: integer): TRedmineProject;
-//begin
-//  Result := Projects1[index];
-//end;
-
-//function TRedmineClient.GetStatus(index: integer): TIssueStatus;
-//begin
-//  Result := Statuses1[index];
-//end;
-
-//function TRedmineClient.GetTracker(index: integer): TTracker;
-//begin
-//  Result := Trackers1[index];
-//end;
-
-//function TRedmineClient.GetTrackerBy(AID: integer): TTracker;
-//var
-//  i: integer;
-//begin
-//  Result := nil;
-//  for i := 0 to CountTrackers - 1 do
-//    if Trackers[i].Id = AID then
-//    begin
-//      Result := Trackers[i];
-//      break;
-//    end;
-//end;
-
-//function TRedmineClient.GetTrackerBy(AName: string): TTracker;
-//var
-//  i: integer;
-//begin
-//  Result := nil;
-//  for i := 0 to CountTrackers - 1 do
-//    if Trackers[i].Name = AName then
-//    begin
-//      Result := Trackers[i];
-//      break;
-//    end;
-//end;
-
-//function TRedmineClient.GetPriorityBy(AID: integer): TIssuePriority;
-//var
-//  i: integer;
-//begin
-//  Result := nil;
-//  for i := 0 to CountPriority - 1 do
-//    if Priority[i].Id = AID then
-//    begin
-//      Result := Priority[i];
-//      break;
-//    end;
-//end;
-
-//function TRedmineClient.GetPriorityBy(AName: string): TIssuePriority;
-//var
-//  i: integer;
-//begin
-//  Result := nil;
-//  for i := 0 to CountPriority - 1 do
-//    if Priority[i].Name = AName then
-//    begin
-//      Result := Priority[i];
-//      break;
-//    end;
-//end;
-
-//function TRedmineClient.GetStatusBy(AID: integer): TIssueStatus;
-//var
-//  i: integer;
-//begin
-//  Result := nil;
-//  for i := 0 to CountStatuses - 1 do
-//    if Statuses[i].ID = AID then
-//    begin
-//      Result := Statuses[i];
-//      break;
-//    end;
-//end;
-
-//function TRedmineClient.GetStatusBy(AName: string): TIssueStatus;
-//var
-//  i: integer;
-//begin
-//  Result := nil;
-//  for i := 0 to CountStatuses - 1 do
-//    if Statuses[i].Name = AName then
-//    begin
-//      Result := Statuses[i];
-//      break;
-//    end;
-//end;
-
 function TRedmineClient.GetDefaultPriority: TIssuePriority;
 var
   i: Integer;
@@ -302,19 +195,6 @@ begin
       break;
     end;
 end;
-
-//function TRedmineClient.GetUser(id: integer): TRedmineUser;
-//var
-//  i, j: integer;
-//begin
-//  for i := 0 to CountProjects - 1 do
-//    for j := 0 to Projects[i].CountUsers - 1 do
-//      if Projects[i].Users[j].id = id then
-//      begin
-//        Result := Projects[i].Users[j];
-//        break;
-//      end;
-//end;
 
 procedure TRedmineClient.SetSite(AValue: string);
 begin
@@ -349,7 +229,6 @@ begin
   HTTP.HandleRedirects := False;
   HTTP.ReadTimeout := 20000;
   HTTP.ConnectTimeout := 20000;
-
 end;
 
 procedure TRedmineClient.SetBusy(Force: boolean);
@@ -431,7 +310,6 @@ var
   Version1: TProjectVersion;
   Category1: TIssueCategory;
 begin
-
   Result := 0;
   ChangeStatus('Парсинг проектов (XML)');
   if (id > 0) then
@@ -500,25 +378,6 @@ begin
   XML.Free;
 end;
 
-//procedure TRedmineClient.UpdateIssue(number: integer);
-//var
-//  content, p: string;
-//  x: integer;
-//  Issue1: TPIssue;
-//begin
-//  content := GetContent(site + '/issues/' + IntToStr(number));
-//  x := pos('<strong>Описание</strong>', content);
-//  if x > 0 then
-//    p := StripeTags(GetTextInTag(Copy(content, x, length(content)), 'div', 1))
-//  else
-//    p := 'Описание отсутствует';
-//  Issue1 := Issue[number];
-//  Issue1^.Parsed := True;
-//  Issue1^.Description := p;
-//  if Assigned(FOnUpdateIssue) then
-//    FOnUpdateIssue(Self, Issue1^);
-//end;
-
 procedure TRedmineClient.Update;
 var
   Content: string;
@@ -544,13 +403,6 @@ begin
   UpdateProgres(1, 1);
   UnSetBusy(True);
 end;
-
-//function TRedmineClient.GetProjectByName(AName: string): TRedmineProject;
-//var
-//  i: integer;
-//begin
-//  Result := GetProjectByNameRecursive(AName);
-//end;
 
 procedure TRedmineClient.UpdateNews(Offset: Integer);
 var
@@ -584,61 +436,6 @@ begin
   if Assigned(FOnUpdateNews) then
     FOnUpdateNews(self);
 end;
-
-procedure TRedmineClient.SaveIssue(index: Integer);
-//var
-//Issue1: TPIssue;
-//Post: TIdMultiPartFormDataStream;
-//Content: string;
-begin
-  //Issue1 := Issue[index];
-  //if assigned(Issue1) then
-  //begin
-  //  SetBusy(True);
-  //  HTTP.AllowCookies := False;
-  //  Content := GetContent(site + '/issues/' + IntToStr(Issue1^.Number));
-  //  Post := TIdMultiPartFormDataStream.Create;
-  //  authenticity_token := GetTagParam(GetTag(Content, 'input', 5), 'value');
-  //  HTTP.Request.Accept := 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
-  //  HTTP.Request.AcceptEncoding := 'gzip,deflate';
-  //  HTTP.Request.CacheControl := 'max-age=0';
-  //  Post.AddFormField('utf8', '✓');
-  //  Post.AddFormField('_method', 'put');
-  //  Post.AddFormField('authenticity_token', authenticity_token);
-  //  //Post.AddFormField('issue[tracker_id]','2');
-  //  Post.AddFormField('issue[subject]', Issue1^.Subject);
-  //  Post.AddFormField('issue[description]', Issue1^.Description);
-  //  //Post.AddFormField('issue[status_id]','1');
-  //  //Post.AddFormField('issue[priority_id]','4');
-  //  //Post.AddFormField('issue[assigned_to_id]','6');
-  //  //Post.AddFormField('issue[parent_issue_id]','');
-  //  //Post.AddFormField('issue[start_date]','2013-04-22');
-  //  //Post.AddFormField('issue[due_date]','');
-  //  //Post.AddFormField('issue[estimated_hours]','');
-  //  //Post.AddFormField('issue[done_ratio]','0');
-  //  //Post.AddFormField('time_entry[hours]','');
-  //  //Post.AddFormField('time_entry[activity_id]','');
-  //  //Post.AddFormField('time_entry[comments]','');
-  //  //Post.AddFormField('notes','');
-  //  //Post.AddFormField('attachments[1][file]','');
-  //  //Post.AddFormField('attachments[1][description]','');
-  //  Post.AddFormField('issue[lock_version]', GetTagParam(GetTag(Content, 'input', 21), 'value'));
-  //  Post.AddFormField('last_journal_id', GetTagParam(GetTag(Content, 'input', 22), 'value'));
-  //  Post.AddFormField('commit', 'Принять');
-  //  GetPostContent(site + '/issues/' + IntToStr(Issue1^.Number), Post);
-  //  UnSetBusy(True);
-
-  //  if Assigned(FOnSaveIssue) then
-  //    FOnSaveIssue(Self, Issue1, True);
-  //end;
-end;
-
-//function TRedmineClient.AddProject: TRedmineProject;
-//begin
-//  SetLength(Projects1, CountProjects + 1);
-//  Projects1[CountProjects - 1] := TRedmineProject.Create(self);
-//  Result := Projects1[CountProjects - 1];
-//end;
 
 function TRedmineClient.Login(AAnonym: boolean; AsHtml: boolean; ASilence: boolean = False): boolean;
 var
@@ -882,38 +679,6 @@ begin
   if Assigned(FOnChangeStatus) then
     FOnChangeStatus(Self, Message);
 end;
-
-//function TRedmineClient.GetProjectByNameRecursive(AName: string; AOwner: TRedmineProject): TRedmineProject;
-//var
-//  i: integer;
-//  Count1: integer;
-//begin
-//  Result := nil;
-//  if Assigned(AOwner) then
-//  begin
-//    for i := 0 to Length(AOwner.SubProjects1) - 1 do
-//    begin
-//      if AOwner.SubProjects[i].Name = AName then
-//        Result := AOwner.SubProjects[i];
-//      if (AOwner.SubProjects[i].CountSubProject > 0) and (not Assigned(Result)) then
-//        Result := GetProjectByNameRecursive(AName, AOwner.SubProjects[i]);
-//      if Assigned(Result) then
-//        break;
-//    end;
-//  end
-//  else
-//  begin
-//    for i := 0 to CountProjects - 1 do
-//    begin
-//      if Projects[i].Name = AName then
-//        Result := Projects[i];
-//      if (Projects[i].CountSubProject > 0) and (not Assigned(Result)) then
-//        Result := GetProjectByNameRecursive(AName, Projects[i]);
-//      if Assigned(Result) then
-//        break;
-//    end;
-//  end;
-//end;
 
 function TRedmineClient.PreparePost(AsSave: boolean; method: string): TIdMultiPartFormDataStream;
 begin
