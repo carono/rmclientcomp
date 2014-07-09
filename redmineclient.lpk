@@ -7,8 +7,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\Custom"/>
-        <UnitOutputDirectory Value="d:\temp\components\$NameOnly($(ProjFile))\$(TargetCPU)-$(TargetOS)"/>
+        <OtherUnitFiles Value="headers;implementations"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)\$(FPCVer)"/>
       </SearchPaths>
       <Other>
         <CompilerMessages>
