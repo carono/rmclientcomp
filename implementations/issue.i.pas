@@ -502,7 +502,11 @@ begin
     Node1.AppendChild(CreateNode(XML, 'description', Utf8ToAnsi(Description)));
     Node1.AppendChild(CreateNode(XML, 'notes', Utf8ToAnsi(Note1)));
     Node1.AppendChild(CreateNode(XML, 'notes', Utf8ToAnsi(Note1)));
-
+    if (Started = 0) then
+    begin
+      raise Exception.Create('Invalid started date');
+      exit;
+    end;
     Node1.AppendChild(CreateNode(XML, 'start_date', FormatDateTime('yyyy-mm-dd', Started)));
     if (DueDate > Started) then
       Node1.AppendChild(CreateNode(XML, 'due_date', FormatDateTime('yyyy-mm-dd', DueDate)));
