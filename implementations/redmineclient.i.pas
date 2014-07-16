@@ -310,6 +310,7 @@ var
   Version1: TProjectVersion;
   Category1: TIssueCategory;
 begin
+  //try
   Result := 0;
   ChangeStatus('Парсинг проектов (XML)');
   if (id > 0) then
@@ -375,6 +376,10 @@ begin
     if Assigned(FOnUpdateProject) then
       FOnUpdateProject(self, Project1);
   end;
+  //except
+  //  on E: Exception do
+  //    ChangeStatus('ОШИБКА: ' + E.Message);
+  //end;
   XML.Free;
 end;
 
@@ -391,15 +396,20 @@ begin
   id1 := 0;
   {$ENDIF}
   SetBusy(True);
-  HTMLCONTENT1 := '';
-  FillRoles;
-  FillTrackers;
-  FillProjects(18);
-  FillPriority;
-  //FillUsers;
-  FillStatuses;
-  FillIssues(18);
-  UpdateNews();
+  try
+    HTMLCONTENT1 := '';
+    FillRoles;
+    FillTrackers;
+    FillProjects(id1);
+    FillPriority;
+    //FillUsers;
+    FillStatuses;
+    FillIssues(id1);
+    UpdateNews();
+  except
+    on E: Exception do
+      ChangeStatus('ОШИБКА: ' + E.Message);
+  end;
   UpdateProgres(1, 1);
   UnSetBusy(True);
 end;

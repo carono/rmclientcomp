@@ -1,7 +1,7 @@
 unit rc_classes;
 
 {$mode objfpc}{$H+}
-{$Define DEBUG}
+//{$Define DEBUG}
 
 interface
 

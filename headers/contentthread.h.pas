@@ -30,6 +30,7 @@ type
     constructor Create(AOwner: TObject; Url: string; AMethod: TContentMethod); overload;
   end;
 
+
 {$IFDEF DontDefineThisVar}
 implementation
 

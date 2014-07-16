@@ -228,17 +228,17 @@ end;
 
 procedure TIssue.SetAssignee(AValue: TRedmineUser);
 begin
-  SetParam(AValue, Assignee1, NominalAssignee1);
+  SetParam(TObject(AValue), TObject(Assignee1), TObject(NominalAssignee1));
 end;
 
 procedure TIssue.SetAutor(AValue: TRedmineUser);
 begin
-  SetParam(AValue, Autor1, NominalAutor1);
+  SetParam(TObject(AValue), TObject(Autor1), TObject(NominalAutor1));
 end;
 
 procedure TIssue.SetCategory(AValue: TIssueCategory);
 begin
-  SetParam(AValue, Category1, NominalCategory1);
+  SetParam(TObject(AValue), TObject(Category1), TObject(NominalCategory1));
 end;
 
 procedure TIssue.SetClosed(AValue: TDateTime);
@@ -273,7 +273,7 @@ end;
 
 procedure TIssue.SetProject(AValue: TRedmineProject);
 begin
-  SetParam(AValue, Project1, NominalProject1);
+  SetParam(TObject(AValue), TObject(Project1), TObject(NominalProject1));
 end;
 
 procedure TIssue.SetSpent(AValue: double);
@@ -288,7 +288,7 @@ end;
 
 procedure TIssue.SetStatus(AValue: TIssueStatus);
 begin
-  SetParam(AValue, Status1, NominalStatus1);
+  SetParam(TObject(AValue), TObject(Status1), TObject(NominalStatus1));
 end;
 
 procedure TIssue.SetSubject(AValue: string);
@@ -301,7 +301,7 @@ end;
 
 procedure TIssue.SetTracker(AValue: TTracker);
 begin
-  SetParam(AValue, Tracker1, NominalTracker1);
+  SetParam(TObject(AValue), TObject(Tracker1), TObject(NominalTracker1));
 end;
 
 procedure TIssue.SetUpdated(AValue: TDateTime);
@@ -311,7 +311,7 @@ end;
 
 procedure TIssue.SetVersion(AValue: TProjectVersion);
 begin
-  SetParam(AValue, Version1, NominalVersion1);
+  SetParam(TObject(AValue), TObject(Version1), TObject(NominalVersion1));
 end;
 
 procedure TIssue.ParseComments(XMLNode1: TDOMNode);
@@ -344,16 +344,37 @@ begin
   end;
 end;
 
-procedure TIssue.SetParam(AValue, AParam, ANominalValue: variant);
+function TIssue.SetParam(var AValue: TObject; var AParam: TObject; var ANominalValue: TObject): boolean;
 begin
-  if TripCompare(AValue, AParam, ANominalValue) then
+  if pointer(AValue) = pointer(AParam) then
+    SetNothing(ANominalValue)
+  else
+  begin
+    AParam := AValue;
     isChanged1 := True;
+  end;
 end;
 
-procedure TIssue.SetParam(AValue, AParam, ANominalValue: TObject);
+function TIssue.SetParam(var AValue: TDateTime; var AParam: TDateTime; var ANominalValue: TDateTime): boolean;
 begin
-  if TripCompare(AValue, AParam, ANominalValue) then
+  if AValue = AParam then
+    SetNothing(ANominalValue)
+  else
+  begin
+    AParam := AValue;
     isChanged1 := True;
+  end;
+end;
+
+function TIssue.SetParam(var AValue: AnsiString; var AParam: AnsiString; var ANominalValue: AnsiString): boolean;
+begin
+  if AValue = AParam then
+    SetNothing(ANominalValue)
+  else
+  begin
+    AParam := AValue;
+    isChanged1 := True;
+  end;
 end;
 
 function TIssue.CreateNode(AParent: TXMLDocument; AName, AValue: string): TDOMElement;
@@ -388,11 +409,6 @@ begin
   XML.Free;
 end;
 
-procedure TIssue.UpdateEnumerations;
-begin
-
-end;
-
 procedure TIssue.AddComment(Message: string);
 begin
   Note1 := Message;
@@ -401,12 +417,12 @@ end;
 
 procedure TIssue.SetParent(AValue: TIssue);
 begin
-  SetParam(AValue, Parent1, NominalParent1);
+  SetParam(TObject(AValue), TObject(Parent1), TObject(NominalParent1));
 end;
 
 procedure TIssue.SetPriority(AValue: TIssuePriority);
 begin
-  SetParam(AValue, Priority1, NominalPriority1);
+  SetParam(TObject(AValue), TObject(Priority1), TObject(NominalPriority1));
 end;
 
 procedure TIssue.Cancel;
@@ -517,9 +533,11 @@ begin
     {$IFDEF DEBUG}
     WriteXMLFile(XML, 'c:/test.xml');
     {$ENDIF}
+
+
     WriteXML(XML, S);
     Content := S.DataString;
-
+    {$IFNDEF DEBUG}
     if Number = 0 then
     begin
       content := Redmine.PostContent(Redmine.Site + '/issues.xml', S);
@@ -530,6 +548,7 @@ begin
     begin
       content := Redmine.PutContent(URL + '.xml', S);
     end;
+    {$ENDIF}
     Cancel;
     XML.Free;
     Redmine.HTTP.Request.ContentType := 'text/html';
@@ -669,11 +688,6 @@ begin
   Cancel;
   if Assigned(Redmine.FOnUpdateIssue) then
     Redmine.FOnUpdateIssue(Redmine, Self);
-end;
-
-procedure TIssue.Update(CSV: TCSV; Row: Integer);
-begin
-
 end;
 
 constructor TIssue.Create(AOwner: TObject; ANumber: Integer);

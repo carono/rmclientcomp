@@ -106,14 +106,14 @@ type
     procedure SetUpdated(AValue: TDateTime);
     procedure SetVersion(AValue: TProjectVersion);
     procedure ParseComments(XMLNode1: TDOMNode);
-    procedure SetParam(AValue, AParam, ANominalValue: variant);
-    procedure SetParam(AValue, AParam, ANominalValue: TObject);
 
+    function SetParam(var AValue: TObject; var AParam: TObject; var ANominalValue: TObject): boolean;
+    function SetParam(var AValue: TDateTime; var AParam: TDateTime; var ANominalValue: TDateTime): boolean;
+    function SetParam(var AValue: AnsiString; var AParam: AnsiString; var ANominalValue: AnsiString): boolean;
     function CreateNode(AParent: TXMLDocument; AName, AValue: string): TDOMElement;
   public
     property URL: string read GetURL;
     procedure UpdateComments();
-    procedure UpdateEnumerations();
     property Tracker: TTracker read GetTracker write SetTracker;
     property Project: TRedmineProject read GetProject write SetProject;
     property Redmine: TRedmineClient read GetRedmine;
@@ -146,7 +146,6 @@ type
     function Delete(): boolean;
     procedure Save();
     procedure Update(XMLNode1: TDOMNode); overload;
-    procedure Update(CSV: TCSV; Row: Integer); overload;
     constructor Create(AOwner: TObject; ANumber: Integer = 0);
     destructor Destroy; override;
   end;
