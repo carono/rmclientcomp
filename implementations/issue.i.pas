@@ -487,6 +487,7 @@ var
 begin
   RC := Redmine;
   RC.SetBusy(True);
+  S := TStringStream.Create('');
   try
     XML := TXMLDocument.Create;
 
@@ -533,7 +534,7 @@ begin
 
     XML.Appendchild(Node1);
 
-    S := TStringStream.Create('');
+
     {$IFDEF DEBUG}
     WriteXMLFile(XML, 'c:/test.xml');
     {$ENDIF}
