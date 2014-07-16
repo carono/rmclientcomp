@@ -1,7 +1,9 @@
 unit rc_classes;
 
 {$mode objfpc}{$H+}
-//{$Define DEBUG}
+
+{create empty file, or delete this include}
+{$I defines.inc}
 
 interface
 
