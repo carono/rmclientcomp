@@ -29,7 +29,10 @@ type
 type
   TIssues = class;
 
+type
+  TIssue = class;
 
+{$I headers/issuecustomfield.h.pas}
 {$I headers/projectversion.h.pas}
 {$I headers/issue.h.pas}
 {$I headers/tracker.h.pas}
@@ -47,6 +50,7 @@ function StrToFloatCustom(Str1: string): double;
 
 implementation
 
+{$I implementations/issuecustomfield.i.pas}
 {$I implementations/redmineproject.i.pas}
 {$I implementations/news.i.pas}
 {$I implementations/projectversion.i.pas}
@@ -54,6 +58,7 @@ implementation
 {$I implementations/redmineclient.i.pas}
 {$I implementations/issue.i.pas}
 {$I implementations/contentthread.i.pas}
+
 
 function StrToFloatCustom(Str1: string): double;
 begin

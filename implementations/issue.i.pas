@@ -642,6 +642,11 @@ begin
   APriorityId1 := StrToInt(XMLNode1.FindNode('priority').Attributes.GetNamedItem('id').NodeValue);
   AStatusId1 := StrToInt(XMLNode1.FindNode('status').Attributes.GetNamedItem('id').NodeValue);
 
+  if assigned(XMLNode1.FindNode('custom_fields')) then begin
+    CustromFields.Clear;
+    CustromFields.Load(XMLNode1.FindNode('custom_fields'));
+  end;
+
   Project1 := Redmine.Projects.GetItemBy(AProjectId1);
   if AParentId1 > 0 then
   begin
@@ -684,6 +689,8 @@ begin
   Description1 := ADescription1;
   DueDate1 := StrToDateTimeCustom(ADueDateStr1);
   AIndex1 := Redmine.Users.GetItemIndex(Redmine.CurrentUser);
+
+
   //ARole1 := Project1.Users.Roles[AIndex1].Item[0];
 
   //if not Redmine.Tracking.Storaged(ARole1, Status1, Redmine.CurrentUser) then
@@ -698,6 +705,7 @@ end;
 constructor TIssue.Create(AOwner: TObject; ANumber: Integer);
 begin
   Cancel;
+  FCustromFields := TIssueCustomFieldManager.Create(self);
   Number1 := ANumber;
   Childs1 := TIssues.Create(self);
   Owner1 := AOwner;
@@ -723,5 +731,6 @@ end;
 destructor TIssue.Destroy;
 begin
   Childs1.Free;
+  FCustromFields.Free;
 end;
 

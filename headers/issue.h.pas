@@ -14,6 +14,7 @@ type
 
   TIssue = class(TObject)
   private
+    FCustromFields: TIssueCustomFieldManager;
     Tracker1: TTracker;
     isChanged1: boolean;
     Owner1: TObject;
@@ -139,8 +140,11 @@ type
     property Done: double read GetDone write SetDone;
     property Childs: TIssues read Childs1;
     property isChanged: boolean read GetisChanged;
+    property CustromFields: TIssueCustomFieldManager read FCustromFields;
+
     procedure AddComment(Message: string);
     procedure Cancel;
+
     procedure Refresh(Silence: boolean = False);
     function AddChild(ANumber: Integer = 0): TIssue;
     function Delete(): boolean;
