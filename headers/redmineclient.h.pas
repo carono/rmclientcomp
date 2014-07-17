@@ -23,9 +23,11 @@ type
   TOnChangeStatus = procedure(Sender: TObject; Message: string) of object;
   TOnUpdateNews = procedure(Sender: TObject) of object;
   TOnUpdateProject = procedure(Sender: TObject; AProject: TRedmineProject) of object;
+  TOnGetProfile = procedure(Sender: TObject) of object;
 
   TRedmineClient = class(TComponent)
   private
+    FOnGetProfile: TOnGetProfile;
     FOnUpdateProject: TOnUpdateProject;
     Roles1: TRoles;
     Users1: TUsers;
@@ -152,6 +154,7 @@ type
     property OnChangeStatus: TOnChangeStatus read FOnChangeStatus write FOnChangeStatus;
     property OnUpdateNews: TOnUpdateNews read FOnUpdateNews write FOnUpdateNews;
     property OnUpdateProject: TOnUpdateProject read FOnUpdateProject write FOnUpdateProject;
+    property OnGetProfile: TOnGetProfile read FOnGetProfile write FOnGetProfile;
   end;
 
 {$IFDEF DontDefineThisVar}

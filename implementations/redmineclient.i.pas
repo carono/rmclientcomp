@@ -130,6 +130,8 @@ begin
       UserId1 := StrToInt(Node1.FindNode('id').TextContent);
       UserLogin1 := Node1.FindNode('login').TextContent;
       CurrentUser1 := Users.Add(TRedmineUser.Create(firstname1 + ' ' + lastname1, UserId1));
+      if assigned(FOnGetProfile) then
+        FOnGetProfile(self);
       // Получаем список отнощений пользователя к проектам, для загрузки привилегий
       MembershipsNode1 := Node1.FindNode('memberships');
       for i := 0 to MembershipsNode1.ChildNodes.Count - 1 do
