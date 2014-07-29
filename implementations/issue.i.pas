@@ -502,7 +502,6 @@ begin
     Node1.AppendChild(CreateNode(XML, 'done_ratio', IntToStr(round(Done))));
     Node1.AppendChild(CreateNode(XML, 'description', Utf8ToAnsi(Description)));
     Node1.AppendChild(CreateNode(XML, 'notes', Utf8ToAnsi(Note1)));
-    Node1.AppendChild(CreateNode(XML, 'notes', Utf8ToAnsi(Note1)));
     if (Started = 0) then
     begin
       raise Exception.Create('Invalid started date');
